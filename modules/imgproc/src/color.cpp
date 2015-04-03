@@ -5634,9 +5634,16 @@ struct Luv2RGB_f
             float L = src[i], u = src[i+1], v = src[i+2], d, X, Y, Z;
             Y = (L + 16.f) * (1.f/116.f);
             Y = Y*Y*Y;
-            d = (1.f/13.f)/L;
-            u = u*d + _un;
-            v = v*d + _vn;
+            if (L == 0) {
+              d = 0;
+              u = 0;
+              v = 0;
+            }
+            else {
+              d = (1.f/13.f)/L;
+              u = u*d + _un;
+              v = v*d + _vn;
+            }
             float iv = 1.f/v;
             X = 2.25f * u * Y * iv ;
             Z = (12 - 3 * u - 20 * v) * Y * 0.25f * iv;
